@@ -42,7 +42,7 @@ defmodule Server do
   end
 
   def serialze(response) do
-    "+#{response}/r/n"
+    "+#{response}\r\n"
   end
 
   def write_response(response, client_socket) do
