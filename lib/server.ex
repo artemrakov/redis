@@ -17,7 +17,7 @@ defmodule Server do
   def serve_loop(listen_socket) do
     IO.puts "Waiting client to serve"
 
-    serve(listen_socket)
+    Task.start(fn -> serve(listen_socket) end)
     serve_loop(listen_socket)
   end
 
