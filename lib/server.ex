@@ -16,7 +16,7 @@ defmodule Server do
     IO.puts "Waiting for client connection"
 
     {:ok, client} = :gen_tcp.accept(listen_socket)
-    Task.start(fn -> serve(client) end)
+    serve(client)
 
     accept_loop(listen_socket)
   end
@@ -45,7 +45,5 @@ defmodule Server do
 
   def write_response(response, client_socket) do
     :ok = :gen_tcp.send(client_socket, response)
-
-    :gen_tcp.close(client_socket)
   end
 end
