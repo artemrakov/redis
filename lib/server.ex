@@ -9,15 +9,21 @@ defmodule Server do
     IO.puts("Logs from your program will appear here!")
 
     {:ok, socket} = :gen_tcp.listen(6379, [:binary, active: false, reuseaddr: true])
-    {:ok, client} = :gen_tcp.accept(socket)
+    accept_loop(socket)
+  end
 
-    serve_loop(client)
+  def accept_loop(listen_socket) do
+    IO.puts("Waiting client to serve")
+
+    {:ok, client_socket} = :gen_tcp.accept(listen_socket)
+
+    Task.start(fn -> serve_loop(client_socket) end)
+    accept_loop(listen_socket)
   end
 
   def serve_loop(listen_socket) do
-    IO.puts "Waiting client to serve"
 
-    Task.start(fn -> serve(listen_socket) end)
+    serve(listen_socket)
     serve_loop(listen_socket)
   end
 
