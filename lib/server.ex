@@ -6,7 +6,7 @@ defmodule Server do
   end
 
   def listen() do
-    {:ok, socket} = :gen_tcp.listen(6379, [:binary, active: false, reuseaddr: true])
+    {:ok, socket} = :gen_tcp.listen(6377, [:binary, active: false, reuseaddr: true])
     accept_loop(socket)
   end
 
@@ -25,7 +25,9 @@ defmodule Server do
   def serve(client_socket) do
     client_socket
     |> read_request
+    |> IO.inspect
     |> Parser.parse()
+    |> IO.inspect
     |> Handler.handle()
     |> write_response(client_socket)
   end

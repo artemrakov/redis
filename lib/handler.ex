@@ -23,7 +23,7 @@ defmodule Handler do
     "+#{data}\r\n"
   end
 
-  def failure(data) do
-    "-ERR unknown command #{data}\r\n"
+  def failure(_) do
+    "-ERR unknown command\r\n"
   end
 end
