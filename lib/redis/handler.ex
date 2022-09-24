@@ -18,10 +18,12 @@ defmodule Redis.Handler do
 
   def handle({"set", [key, value]}) do
     Memory.set(key, value)
+    |> success
   end
 
   def handle({"get", [key]}) do
     Memory.get(key)
+    |> success
   end
 
   def handle(data) do
