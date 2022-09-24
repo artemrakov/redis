@@ -27,7 +27,6 @@ defmodule Server do
     |> read_request
     |> Parser.parse()
     |> Handler.handle()
-    |> serialze
     |> write_response(client_socket)
   end
 
@@ -35,10 +34,6 @@ defmodule Server do
     {:ok, request} = :gen_tcp.recv(client_socket, 0)
 
     request
-  end
-
-  def serialze(response) do
-    "+#{response}\r\n"
   end
 
   def write_response(response, client_socket) do
