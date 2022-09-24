@@ -1,8 +1,8 @@
-defmodule Server do
-  use Application
+defmodule Redis.Server do
+  use Supervisor
 
-  def start(_type, _args) do
-    Supervisor.start_link([{Task, fn -> Server.listen() end}], strategy: :one_for_one)
+  def start_link(_args) do
+    Supervisor.start_link([{Task, fn -> Redis.Server.listen() end}], strategy: :one_for_one)
   end
 
   def listen() do
