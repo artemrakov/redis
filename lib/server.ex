@@ -25,9 +25,7 @@ defmodule Server do
   def serve(client_socket) do
     client_socket
     |> read_request
-    |> IO.inspect
     |> Parser.parse()
-    |> IO.inspect
     |> Handler.handle()
     |> serialze
     |> write_response(client_socket)
