@@ -1,4 +1,6 @@
 defmodule Redis.Handler do
+  alias Redis.Memory
+
   def handle({"ping", []}) do
     "PONG"
     |> success
@@ -12,6 +14,14 @@ defmodule Redis.Handler do
   def handle({"echo", message}) do
     message
     |> success
+  end
+
+  def handle({"set", [key, value]}) do
+    Memory.set(key, value)
+  end
+
+  def handle({"get", [key]}) do
+    Memory.get(key)
   end
 
   def handle(data) do

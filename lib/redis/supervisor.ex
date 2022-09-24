@@ -7,7 +7,8 @@ defmodule Redis.Supervisor do
 
   def init(:ok) do
     children = [
-      Redis.Server
+      Redis.Server,
+      Redis.Memory,
     ]
 
     Supervisor.init(children, strategy: :one_for_one)
