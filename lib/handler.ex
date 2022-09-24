@@ -1,5 +1,5 @@
 defmodule Handler do
   def handle(request) do
-    request
+    "PONG"
   end
 end
