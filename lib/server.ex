@@ -6,15 +6,11 @@ defmodule Server do
   end
 
   def listen() do
-    IO.puts("Logs from your program will appear here!")
-
     {:ok, socket} = :gen_tcp.listen(6379, [:binary, active: false, reuseaddr: true])
     accept_loop(socket)
   end
 
   def accept_loop(listen_socket) do
-    IO.puts("Waiting client to serve")
-
     {:ok, client_socket} = :gen_tcp.accept(listen_socket)
 
     Task.start(fn -> serve_loop(client_socket) end)
@@ -22,7 +18,6 @@ defmodule Server do
   end
 
   def serve_loop(listen_socket) do
-
     serve(listen_socket)
     serve_loop(listen_socket)
   end
@@ -30,7 +25,7 @@ defmodule Server do
   def serve(client_socket) do
     client_socket
     |> read_request
-    |> handle
+    |> Handler.handle
     |> serialze
     |> write_response(client_socket)
   end
@@ -39,10 +34,6 @@ defmodule Server do
     {:ok, request} = :gen_tcp.recv(client_socket, 0)
 
     request
-  end
-
-  def handle(_request) do
-    "PONG"
   end
 
   def serialze(response) do
