@@ -1,6 +1,7 @@
 defmodule Parser do
   def parse(data) do
     info = String.split(data, "/r/n")
+    IO.inspect(info)
     extract_commands(info)
   end
 
