@@ -1,13 +1,13 @@
 defmodule Handler do
-  def handle({"PING", []}) do
+  def handle({"ping", []}) do
     "PONG"
   end
 
-  def handle({"PING", message}) do
+  def handle({"ping", message}) do
     message
   end
 
-  def handle({"ECHO", message}) do
+  def handle({"echo", message}) do
     message
   end
 end

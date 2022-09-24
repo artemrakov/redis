@@ -4,7 +4,7 @@ defmodule Parser do
     extract_commands(info)
   end
 
-  def extract_commands([_ | []]) do
+  def extract_commands(["*0" | []]) do
     {"", []}
   end
 
@@ -12,6 +12,6 @@ defmodule Parser do
     [[_, command] | args_with_data] = Enum.chunk_every(items, 2)
     args = Enum.map(args_with_data, fn [_, arg] -> arg end)
 
-    {command, args}
+    {String.downcase(command), args}
   end
 end
