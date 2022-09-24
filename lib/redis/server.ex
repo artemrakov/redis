@@ -1,8 +1,19 @@
 defmodule Redis.Server do
   use Supervisor
 
+  alias Redis.Parser
+  alias Redis.Handler
+
   def start_link(_args) do
-    Supervisor.start_link([{Task, fn -> Redis.Server.listen() end}], strategy: :one_for_one)
+    Supervisor.start_link(__MODULE__, :ok, name: __MODULE__)
+  end
+
+  def init(:ok) do
+    children = [
+      {Task, fn -> listen() end}
+    ]
+
+    Supervisor.init(children, strategy: :one_for_one)
   end
 
   def listen() do

@@ -1,4 +1,4 @@
-defmodule Parser do
+defmodule Redis.Parser do
   def parse(data) do
     [type | items] = String.split(data, "\r\n", trim: true)
     extract_commands(String.first(type), String.last(type), items)

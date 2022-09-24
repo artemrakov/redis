@@ -1,4 +1,4 @@
-defmodule Handler do
+defmodule Redis.Handler do
   def handle({"ping", []}) do
     "PONG"
     |> success
