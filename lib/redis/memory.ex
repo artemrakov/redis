@@ -40,7 +40,7 @@ defmodule Redis.Memory do
     {:reply, state[key], state}
   end
 
-  def handle_cast({:remove, key}, state) do
+  def handle_info({:remove, key}, state) do
     IO.inspect state
     {_, new_state} = Map.pop(state, key)
     {:noreply, new_state}
