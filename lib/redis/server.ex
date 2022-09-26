@@ -37,6 +37,7 @@ defmodule Redis.Server do
     client_socket
     |> read_request
     |> Parser.parse()
+    |> IO.inspect
     |> Handler.handle()
     |> write_response(client_socket)
   end

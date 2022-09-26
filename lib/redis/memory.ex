@@ -29,6 +29,7 @@ defmodule Redis.Memory do
   end
 
   def handle_call({:set, key, value, opts}, _, state) do
+    IO.inspect opts
     new_state = Map.put(state, key, value)
     Enum.each(opts, fn opt -> set_options(key, opt) end)
 
