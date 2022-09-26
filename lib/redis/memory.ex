@@ -15,16 +15,32 @@ defmodule Redis.Memory do
     GenServer.call(@name, {:get, key})
   end
 
-  def set(key, value) do
-    GenServer.call(@name, {:set, key, value})
+  def set(key, value, opts \\ []) do
+    GenServer.call(@name, {:set, key, value, opts})
   end
 
-  def handle_call({:set, key, value}, _, state) do
+  def remove(key) do
+    GenServer.cast(@name, {:remove, key})
+  end
+
+  def set_options(key, {:px, value}) do
+    interval = String.to_integer(value)
+    Process.send_after(self(), {:remove, key}, interval)
+  end
+
+  def handle_call({:set, key, value, opts}, _, state) do
     new_state = Map.put(state, key, value)
+    Enum.each(opts, fn opt -> set_options(key, opt) end)
+
     {:reply, "OK", new_state}
   end
 
   def handle_call({:get, key}, _, state) do
     {:reply, state[key], state}
+  end
+
+  def handle_cast({:remove, key}, _, state) do
+    {_, new_state} = Map.pop(state, key)
+    {:noreply, new_state}
   end
 end

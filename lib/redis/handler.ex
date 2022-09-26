@@ -16,8 +16,8 @@ defmodule Redis.Handler do
     |> success
   end
 
-  def handle({"set", [key, value]}) do
-    Memory.set(key, value)
+  def handle({"set", [key, value | opts]}) do
+    Memory.set(key, value, opts)
     |> success
   end
 
