@@ -43,6 +43,7 @@ defmodule Redis.Memory do
   def handle_info({:remove, key}, state) do
     IO.inspect state
     {_, new_state} = Map.pop(state, key)
+    IO.inspect new_state
     {:noreply, new_state}
   end
 end
