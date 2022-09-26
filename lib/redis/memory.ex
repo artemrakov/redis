@@ -19,12 +19,10 @@ defmodule Redis.Memory do
     GenServer.call(@name, {:set, key, value, opts})
   end
 
-  def remove(key) do
-    GenServer.cast(@name, {:remove, key})
-  end
-
   def set_options(key, ["px", value]) do
     interval = String.to_integer(value)
+    IO.inspect(key)
+    IO.inspect(interval)
     Process.send_after(self(), {:remove, key}, interval)
   end
 
