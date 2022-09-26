@@ -23,7 +23,7 @@ defmodule Redis.Handler do
 
   def handle({"get", [key]}) do
     Memory.get(key)
-    |> success
+    |> success_or_null
   end
 
   def handle(data) do
@@ -37,5 +37,13 @@ defmodule Redis.Handler do
 
   def failure(_) do
     "-ERR unknown command\r\n"
+  end
+
+  def success_or_null(nil) do
+    "$-1\r\n"
+  end
+
+  def success_or_null(data) do
+    success(data)
   end
 end

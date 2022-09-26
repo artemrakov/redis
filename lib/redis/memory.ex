@@ -21,7 +21,6 @@ defmodule Redis.Memory do
 
   def set_options(key, ["px", value]) do
     interval = String.to_integer(value)
-    IO.inspect key
     Process.send_after(self(), {:remove, key}, interval)
   end
 
@@ -41,9 +40,7 @@ defmodule Redis.Memory do
   end
 
   def handle_info({:remove, key}, state) do
-    IO.inspect state
     {_, new_state} = Map.pop(state, key)
-    IO.inspect new_state
     {:noreply, new_state}
   end
 end
