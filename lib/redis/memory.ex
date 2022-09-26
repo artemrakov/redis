@@ -23,7 +23,7 @@ defmodule Redis.Memory do
     GenServer.cast(@name, {:remove, key})
   end
 
-  def set_options(key, {"px", value}) do
+  def set_options(key, ["px", value]) do
     interval = String.to_integer(value)
     Process.send_after(self(), {:remove, key}, interval)
   end
