@@ -27,6 +27,7 @@ defmodule Redis.Memory do
 
   def handle_call({:set, key, value, opts}, _, state) do
     new_state = Map.put(state, key, value)
+    IO.inspect new_state
 
     opts
     |> Enum.chunk_every(2)
@@ -40,6 +41,7 @@ defmodule Redis.Memory do
   end
 
   def handle_cast({:remove, key}, state) do
+    IO.inspect state
     {_, new_state} = Map.pop(state, key)
     {:noreply, new_state}
   end
